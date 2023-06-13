@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    environment {
+        SVC_ACCOUNT_KEY_DEV = credentials('dev-auth')
+        SVC_ACCOUNT_KEY_UAT = credentials('uat-auth')
+
+        PROJECT_DEV = 'cbs-dev-387107'
+        PROJECT_UAT = 'cbs-uat'
+    }
+
+    stages {
+        stage('Set Creds') {
+            steps {
+                       sh 'echo $SVC_ACCOUNT_KEY_DEV | base64 -d > ./cbs-dev-iamsa.json'
+                       sh 'pwd'        
+                 }            
+        }
+
+        stage('Auth Project') {
+            steps {
+                     sh 'gcloud auth activate-service-account cbs-dev-iamsa@cbs-dev-387107.iam.gserviceaccount.com --key-file=cbs-dev-iamsa.json'
+                     sh "gcloud config set project ${env.PROJECT_DEV}"                   
+            }
+        }
+
+        stage('Get Cluster Cred') {
+            steps {
+                        sh 'gcloud container clusters get-credentials my-cluster --region us-central1 --project cbs-dev-387107'
+            }
+        }
+        
+         stage('Create GKE Cluster') {
+            steps {
+                        sh 'kubectl apply -f petclinicdeployment.yaml'
+            }
+        }
+        
+        
+    }
+}

@@ -52,4 +52,5 @@ Cloud shell create a folder springApp
 **************
 #To Login into the container use cmd
 docker exec -it <image-id> /bin/sh
+cd test
 **************

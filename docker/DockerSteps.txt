@@ -47,6 +47,7 @@ docker run -p 8080:8080 5639cb089d76
 docker pull chanddocker/ui:v1
 docker tag chanddocker/ui:v1 gcr.io/cbs-dev-387107/ui:v1
 docker push gcr.io/cbs-dev-387107/ui:v1
+# Go to console.google.cloud.come --> Container Registry --> Images You can see the image there
 
 
 Cloud shell create a folder springApp

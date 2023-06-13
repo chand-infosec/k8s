@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javaapppetclinic-deployment
+  labels:
+    app: javaapppetclinic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: javaapppetclinic
+  template:
+    metadata:
+      labels:
+        app: javaapppetclinic
+    spec:
+      containers:
+      - name: javaapppetclinic-container
+        image: gcr.io/cbs-dev-387107/ui:v1
+        ports:
+        - containerPort: 8080
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: javaapppetclinic-deployment-service
+spec:
+  selector:
+    app: javaapppetclinic
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080  
+  type: LoadBalancer

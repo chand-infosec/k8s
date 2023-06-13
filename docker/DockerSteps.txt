@@ -48,9 +48,13 @@ docker pull chanddocker/ui:v1
 docker tag chanddocker/ui:v1 gcr.io/cbs-dev-387107/ui:v1
 docker push gcr.io/cbs-dev-387107/ui:v1
 # Go to console.google.cloud.come --> Container Registry --> Images You can see the image there
-
-
-Cloud shell create a folder springApp
+***********************************************************************
+Manual Deployment in Kubernetes in Google CLoud
+Steps:
+Go to Kubernetes engine --> Create Cluster --> mycluster
+Go To Workloads --> Deploy --> Select existing image from Contaier Registry section --> Give Appname --> Port to be 8080 --> Deploy
+Once Deployment is done --> Go To "Exposing services" section --> Load Balancers Section --> Click on external ip --> Port not required 
+http://35.223.223.55/  --> POrt forwarding to 8080 is done by oad balancers
 
 
 

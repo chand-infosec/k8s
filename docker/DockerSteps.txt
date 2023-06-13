@@ -1,0 +1,46 @@
+Create Ubuntu VM/Local Laptop
+# Install OpenJDK 17
+    1  apt-get update
+    2  apt-get upgrade
+    3  apt install openjdk-17-jdk openjdk-17-jre
+    4  java --version
+    5  git clone https://github.com/spring-projects/spring-petclinic.git
+    6  cd spring-petclinic
+    7  ./mvnw package -DskipTests
+    8  ls
+    9  cd target 
+   10  ls
+   11  java -jar spring-petclinic-3.1.0-SNAPSHOT.jar
+******
+Copy the jar to google bucket using gsutil
+login using service account & json key [upload json key file to shell/vm]
+gcloud auth activate-service-account --key-file="../cbs-dev-iamsa.json"
+Go To cd /target
+gsutil cp spring-petclinic-3.1.0-SNAPSHOT.jar gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar
+
+#Copy from bucket to Cloudshell 
+gsutil cp gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar spring-petclinic-3.1.0-SNAPSHOT.jar .
+******
+
+Create a Docker file with content in "Dockerfile" https://github.com/chand-infosec/k8s/blob/main/docker/Dockerfile
+##Generate Docker image by running command
+docker build -t ui:v1 .
+##Test the Docker Image by running 
+docker run -p 8080:8080 5639cb089d76
+*** Steps TO Tag Docker Image and Push to Docker Hub ****
+steps
+shell:
+docker login --username=chanddocker
+
+docker tag <IMAGE-ID> chanddocker/ui:v1
+docker tag 5639cb089d76 chanddocker/ui:v1
+
+Push to docker hub : Save work
+docker push chanddocker/ui:v1
+*************************************************************
+** Test Docker Image by pulling from any Laptop or vm**
+docker pull chanddocker/ui:v1
+
+Now pull to cloud shell and upload to google gcr
+
+Cloud shell create a folder springApp

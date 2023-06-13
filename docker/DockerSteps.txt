@@ -46,3 +46,10 @@ docker run -p 8080:8080 5639cb089d76
 Now pull to cloud shell and upload to google gcr
 
 Cloud shell create a folder springApp
+
+
+
+**************
+#To Login into the container use cmd
+docker exec -it <image-id> /bin/sh
+**************

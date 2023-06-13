@@ -40,6 +40,8 @@ docker push chanddocker/ui:v1
 *************************************************************
 ** Test Docker Image by pulling from any Laptop or vm**
 docker pull chanddocker/ui:v1
+docker run -p 8080:8080 5639cb089d76
+************************************************************
 
 Now pull to cloud shell and upload to google gcr
 

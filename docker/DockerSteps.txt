@@ -1,3 +1,4 @@
+*************************************************************
 Create Ubuntu VM/Local Laptop
 # Install OpenJDK 17
     1  apt-get update
@@ -11,63 +12,60 @@ Create Ubuntu VM/Local Laptop
     9  cd target 
    10  ls
    11  java -jar spring-petclinic-3.1.0-SNAPSHOT.jar
-******
-Copy the jar to google bucket using gsutil
-login using service account & json key [upload json key file to shell/vm]
-gcloud auth activate-service-account --key-file="../cbs-dev-iamsa.json"
-Go To cd /target
-gsutil cp spring-petclinic-3.1.0-SNAPSHOT.jar gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar
+*************************************************************
+# Copy the jar to google bucket using gsutil
+# login using service account & json key [upload json key file to shell/vm]
+>> gcloud auth activate-service-account --key-file="../cbs-dev-iamsa.json"
+# Go To cd /target
+>> gsutil cp spring-petclinic-3.1.0-SNAPSHOT.jar gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar
 
 #Copy from bucket to Cloudshell 
-gsutil cp gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar spring-petclinic-3.1.0-SNAPSHOT.jar .
-******
-
-Create a Docker file with content in "Dockerfile" https://github.com/chand-infosec/k8s/blob/main/docker/Dockerfile
-##Generate Docker image by running command
-docker build -t ui:v1 .
-##Test the Docker Image by running 
-docker run -p 8080:8080 5639cb089d76
-*** Steps TO Tag Docker Image and Push to Docker Hub ****
-steps
-shell:
-docker login --username=chanddocker
-
-docker tag <IMAGE-ID> chanddocker/ui:v1
-docker tag 5639cb089d76 chanddocker/ui:v1
-
-Push to docker hub : Save work
-docker push chanddocker/ui:v1
+>> gsutil cp gs://cbs-dev-test-bkt/spring-petclinic-3.1.0-SNAPSHOT.jar spring-petclinic-3.1.0-SNAPSHOT.jar .
 *************************************************************
-** Test Docker Image by pulling from any Laptop or vm**
-docker pull chanddocker/ui:v1
-docker run -p 8080:8080 5639cb089d76
-************************************************************
+# Create a Docker file with content in "Dockerfile" https://github.com/chand-infosec/k8s/blob/main/docker/Dockerfile
+# Generate Docker image by running command
+>> docker build -t ui:v1 .
+# Test the Docker Image by running 
+>> docker run -p 8080:8080 5639cb089d76
+*** Steps To Tag Docker Image and Push to Docker Hub ****
+# shell:
+>> docker login --username=chanddocker
+# docker tag <IMAGE-ID> chanddocker/ui:v1
+>> docker tag 5639cb089d76 chanddocker/ui:v1
 
-**** Now pull from docker Hub to cloud shell and upload to google gcr ***
-docker pull chanddocker/ui:v1
-docker tag chanddocker/ui:v1 gcr.io/cbs-dev-387107/ui:v1
-docker push gcr.io/cbs-dev-387107/ui:v1
+# Push to docker hub : Save work
+>> docker push chanddocker/ui:v1
+*************************************************************
+# Test Docker Image by pulling from any Laptop or vm**
+>> docker pull chanddocker/ui:v1
+>> docker run -p 8080:8080 5639cb089d76
+************************************************************
+# Now pull from docker Hub to cloud shell and upload to google gcr
+>> docker pull chanddocker/ui:v1
+>> docker tag chanddocker/ui:v1 gcr.io/cbs-dev-387107/ui:v1
+>> docker push gcr.io/cbs-dev-387107/ui:v1
 # Go to console.google.cloud.come --> Container Registry --> Images You can see the image there
+
 ***********************************************************************
-Manual Deployment in Kubernetes in Google CLoud
-Steps:
+# Manual Deployment in Kubernetes in Google CLoud
+# Steps:
 Go to Kubernetes engine --> Create Cluster --> mycluster
 Go To Workloads --> Deploy --> Select existing image from Contaier Registry section --> Give Appname --> Port to be 8080 --> Deploy
 Once Deployment is done --> Go To "Exposing services" section --> Load Balancers Section --> Click on external ip --> Port not required 
 http://35.223.223.55/  --> POrt forwarding to 8080 is done by oad balancers
 
-**************
-#To Login into the container use cmd
-docker exec -it <image-id> /bin/sh
-cd test
-**************
-****Deploy DOcker gcr.io Image using Jenkins on My-cluster *****
+***********************************************************************
+#Additional Info --> To Login into the container use cmd
+>> docker exec -it <image-id> /bin/sh
+>> cd test
+***********************************************************************
+# Deploy Docker gcr.io Image using Jenkins on My-cluster
 Jenkins SSH --> Install kubectl and Auth plugin
-sudo apt-get install -y kubectl
-sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
-kubectl version --client
+>> sudo apt-get install -y kubectl
+>> sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+>> kubectl version --client
 **************************************************************************
-**** jenkins file and yaml file To Deploy Pet Clinic App****************
+# jenkins file and yaml file To Deploy Pet Clinic App - Create Pipeline using Git, Refer files below
 https://github.com/chand-infosec/k8s/blob/main/jenkinsfile
 https://github.com/chand-infosec/k8s/blob/main/petclinicdeployment.yaml
 ************************************************************************

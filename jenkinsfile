@@ -30,12 +30,17 @@ pipeline {
             }
         }
         
-         stage('App Deploy') {
+        stage('App Deploy') {
             steps {
                         sh 'kubectl apply -f petclinicdeployment.yaml'
             }
         }
         
+        stage('Health Check') {
+            steps {
+                sh 'curl http://34.170.190.232/'
+            }
+        }
         
     }
 }

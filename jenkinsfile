@@ -30,7 +30,7 @@ pipeline {
             }
         }
         
-         stage('Create GKE Cluster') {
+         stage('App Deploy') {
             steps {
                         sh 'kubectl apply -f petclinicdeployment.yaml'
             }

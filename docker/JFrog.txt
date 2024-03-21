@@ -1,0 +1,54 @@
+Docker Repository: cbs-docker
+URL:
+https:///artifactory/api/docker/cbs-docker
+
+
+https://cbshaik.jfrog.io
+chand.infosec@gmail.com
+Cb***@1**0
+
+https://jfrog.com/help/r/jfrog-artifactory-documentation/use-docker-client-with-artifactory-cloud
+
+
+Microsoft Windows [Version 10.0.19045.4170]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>docker login https://cbshaik.jfrog.io
+Username: chand.infosec@gmail.com
+Password:
+Login Succeeded
+
+C:\WINDOWS\system32>docker logout https://cbshaik.jfrog.io
+Removing login credentials for cbshaik.jfrog.io
+
+C:\WINDOWS\system32>
+
+
+****************
+artifactory name
+cbsdocker-docker
+
+docker login -uchand.infosec@gmail.com cbshaik.jfrog.io
+
+
+Run this Docker command in your terminal to authenticate
+
+docker login -u chand.infosec@gmail.com cbshaik.jfrog.io
+2. When asked for a password, enter your identity token
+
+Token:cmVmdGtuOjAxOjE3NDI1Nzk5ODM6ekxMMkxwSXNLbVA1ZXA4am9lQnNneDZDYUh5
+
+/*
+
+docker pull cbshaik.jfrog.io/cbsdocker-docker/hello-world:latest
+
+docker push cbshaik.jfrog.io/cbsdocker-docker/hello-world:latest
+
+*/
+
+docker images
+docker login cbshaik.jfrog.io
+docker tag 5639cb089d76 cbshaik.jfrog.io/cbsdocker-docker/ui:v1
+
+docker push cbshaik.jfrog.io/cbsdocker-docker/ui:v1
+
